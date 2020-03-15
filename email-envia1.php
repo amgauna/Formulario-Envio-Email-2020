@@ -1,0 +1,33 @@
+
+    <!-- Tag principal do formulário. Indica onde se localiza o script e o método de envio: 
+         Tag que deve ser preenchida com o e-mail do remetente do formulário 
+         (Não o e-mail do usuário) -->
+    <form method="post" action="http://www18.locaweb.com.br/scripts/FormMail.pl"/>
+
+    <!-- Mantenha esta Tag como “hidden” (assim a mesma não será visível pelo usuário) 
+         evitando que o usuário preencha este campo e o e-mail enviado através do formulário 
+         não seja considerado SPAM. A variável que armazenará o valor deve ser exatamente email  -->
+    <input type="hidden" name="email" value="email@dominio.com.br"/>
+
+    <!--  Tag que adiciona o email do visitante como endereço de resposta, deste modo, quando 
+          você for responder o e-mail, o endereço do visitante será informado no corpo do e-mail: -->
+    <input type="hidden" name="replyto" value="" />
+
+    <!--  Tag que define o(s) endereço(s) de e-mail que receberão os dados preenchidos no seu formulário:  
+          Para adicionar outro recipiente do formulário, separe as contas de email por vírgula, por 
+          exemplo: value=”email@dominio.com.br, podeseroutroemail@outrodomínio.com.br”:  -->
+    <input type="hidden" name="recipient" value="email@dominio.com.br"/>
+
+    <!--  Tag que define o botão que enviará o formulário: -->
+    <input type="submit" name="submit" value="Envia">  
+
+    <!-- Tag que define o assunto do e-mail que contém o formulário. -->
+    <input type="hidden" name="subject" value="Assunto">
+
+    <!--  Tag que redireciona o usuário para uma página de confirmação após enviar o formulário: -->
+    <input type="hidden" name="redirect" value="http://www.dominio.com.br/obrigado.htm">
+
+    <!--  Envio com HTTPS - Para o envio de sites com acesso via SSL ou URL segura em “https://”, 
+          SSL é necessário no seu arquivo de configuração a tag abaixo.  -->
+    <meta name="referrer" content="origin">
+    </form>
