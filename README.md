@@ -1,4 +1,4 @@
-# PHP Formulário de Email
+# PHP / PHPMailer / Formulario de envio de Email
 
 * PHP Mailer (GitHub) = https://github.com/PHPMailer/PHPMailer
 
@@ -8,7 +8,7 @@
 
 ------------------------------
 
-# ASP Formulario de Email
+# ASP / Formulario de envio de Email
 
 Persits.MailSender ( AspEmail )
 
