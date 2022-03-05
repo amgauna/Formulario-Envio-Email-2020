@@ -1,5 +1,9 @@
 # PHP Formulário de Email
 
+* PHP Mailer (GitHub) = https://github.com/PHPMailer/PHPMailer
+* PHPMailer utilizando autenticação de email = https://www.devmedia.com.br/php-envio-de-e-mail-autenticado-utilizando-o-phpmailer/38380
+* PHPMailer envio de email = https://www.devmedia.com.br/phpmailer-envio-de-e-mails-com-php/38784
+
 ------------------------------
 
 # ASP Formulario de Email
