@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+<title>Formulário</title>
+<link href="styles/style_formulario.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+                <!--
+                        function Incluir(varForm){
+                                                                                        if (varForm.Campo1.value == ""){
+                                        window.alert ('O campo "Nome" é de preenchimento obrigatório');
+                                        varForm.Campo1.focus();
+                                        return false;
+                                }
+
+                                                                if (varForm.Campo3.value == ""){
+                                        window.alert ('O campo "E-mail" é de preenchimento obrigatório');
+                                        varForm.Campo3.focus();
+                                        return false;
+                                }
+                                else{
+                                        if (varForm.Campo3.value.search("@") == -1 || varForm.Campo3.value.search("[.*]") == -1){
+                                                window.alert ("O e-mail não é válido");
+                                                varForm.Campo3.focus();
+                                                return false;
+                                        }
+                                }
+
+                                varForm.submit();
+                        }
+
+                -->
+</script>
+</head>
+
+<body>
+
+<%
+Response.Charset = "ISO-8859-1"
+
+
+Assunto = "Fale Conosco - Envio com Autenticação!"
+
+If Not IsEmpty(Request.Form) Then
+  Mensagem = "<B>Nome:</B><BR><BR>"  & Trim(Request.Form("Campo1")) & "<HR size=1 color=gainsboro>"
+  Mensagem = Mensagem & "<B>Email:</B><BR><BR>"  & Trim(Request.Form("Campo3")) & "<HR size=1 color=gainsboro>"
+  Mensagem = Mensagem & "<B>Telefone:</B><BR><BR>"  & Trim(Request.Form("Campo4")) & "<HR size=1 color=gainsboro>"
+  Mensagem = Mensagem & "<B>Assunto:</B><BR><BR>"  & Trim(Request.Form("Campo8")) & "<HR size=1 color=gainsboro>"
+  Mensagem = Mensagem & "<br><br><br><b>IP:  </b>" &request("REMOTE_ADDR")
+
+Set objMail = Server.CreateObject("CDO.Message")
+Set objCDOSYSCon = Server.CreateObject ("CDO.Configuration")
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/sendusing") = 2 'Send the message using the network (SMTP over the network).'
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpserver") ="smtp.dominio.com"
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpserverport") = 587
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpusessl") = False 'Use SSL for the connection (True or False)'
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout") = 60
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpauthenticate") = 1 'basic (clear-text) authentication'
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/sendusername") ="email@dominio.com"
+objCDOSYSCon.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/sendpassword") ="senha"
+objCDOSYSCon.Fields.update
+Set objMail.Configuration = objCDOSYSCon
+
+ 'Para definir o charset da mensagem'
+objMail.BodyPart.Charset = "ISO-8859-1"
+objMail.From = "email@dominio.com"
+objMail.To =   Trim(Request.Form("Campo3"))
+objMail.ReplyTo = "email@dominio.com"
+objMail.Subject = Assunto
+objMail.HTMLBody = Mensagem
+objMail.HTMLBodyPart.Charset = "ISO-8859-1"
+objMail.Send
+
+Set objMail = Nothing
+Set objCDOSYSCon = Nothing
+
+%>
+<p class="center"><b>Dados enviados</b><br />
+Obrigado, seus dados foram enviados com sucesso. </p>
+<%
+Else
+%>
+<p class="center"><b>Enviar Dados</b><br />
+Informe os dados abaixo:</p>
+<form action='<%=Request.ServerVariables("SCRIPT_NAME")%>' method="post" name="formIncluir" accept-charset="ISO-8859-1">
+        <table width="250px" height="250px">
+         <tr><td>
+        <fieldset>
+        <legend>Fale Conosco!</legend>
+        <label>Nome: <input class="input_form" name="Campo1" type="text" /></label><br/>
+        <label>Email: <input class="input_form" name="Campo3" type="text" /></label><br/>
+        <label>Telefone: <input class="input_form" name="Campo4" type="text" /></label><br/>
+        <label>Assunto: <textarea class="input_formtextarea" name="Campo8"></textarea></label>
+        <label>
+        <input id="botao_enviar" name="enviar" onclick="JavaScript:Incluir(formIncluir);" type="button" value="Enviar" /></label>
+        </fieldset>
+         </td></tr>
+        </table>
+</form>
+<%
+End If
+%>
+
+</body>
+
+</html>
